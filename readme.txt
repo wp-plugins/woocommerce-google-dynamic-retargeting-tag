@@ -43,13 +43,14 @@ RLSA: https://www.youtube.com/watch?v=vkOHdEx1PQY
 
 = Where can I report a bug or suggest improvements? =
 
-Please report your bugs and support requests in the Support Forum for this plugin.
+Please report your bugs and support requests in the Support Forum for this plugin: http://wordpress.org/support/plugin/woocommerce-google-dynamic-retargeting-tag
 I will need some Data to be able to help you.
-Website address
-WordPress version
-WooCommerce version
-WooCommerce theme and version of the theme
-The AdWords remarketing tags Conversion ID and Conversion label
+* Website address
+* WordPress version
+* WooCommerce version
+* WooCommerce theme and version of the theme
+* The AdWords remarketing tags Conversion ID and Conversion label
+
 (Most of these information is publicly viewable on your webpage. If you still want to keep it private don't hesitate to send me a support request to info@wolfundbaer.ch)
 
 
