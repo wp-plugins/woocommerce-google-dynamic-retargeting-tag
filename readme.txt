@@ -21,7 +21,7 @@ There are a few requirements for this plugin to run.
 * WooCommerce Google Product Feed plugin or something similar to upload the products to the Google Merchant Center
 * AdWords account with a configured remarketing tag
 
-Once all of this has been installed correctly Google AdWords will collect the remarketing lists. With those lists you will be able to use Remarketing Lists for Search Ads (RLSA) ads and Dynamic Display Ads.  
+Once all of this has been installed correctly Google AdWords will collect the remarketing lists. With those lists you will be able to use Remarketing Lists for Search Ads (RLSA) and Dynamic Display Ads.  
 
 The WGDR plugin has been tested with the current versions of WordPress, WooCommerce, the Google Product Feed plugin, the Wootique and Canvas themes.
 
