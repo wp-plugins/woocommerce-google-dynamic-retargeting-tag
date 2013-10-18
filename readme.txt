@@ -16,7 +16,8 @@ This plugin enables to run dynamic retargeting Google AdWords campaigns with cus
 
 There are a few requirements for this plugin to run. 
 
-1. WooCommerce
+* WooCommerce
+* Google Merchant Center Account
 
 The first and most obvious is you need WooCommerce running on your Wordpress installation. The second requirement is a Google Merchant Center account into which you have uploaded all your products. There is a Woocommerce plugin called Google Product Feed which can do that for you and with which this plugin has been tested. If you use a different way to upload your products into Google Merchant Center (GMC) the plugin might need some tweaking as it is important to match the product ID from WooCommerce with the product ID which has been uploaded into the GMC. Also this plugin has been tested with the Wootique and Canvas themes. As long as your theme includes the woo_foot hook it should work. Otherwise the plugin needs again some more tweaking (eg. firing the tag in wp_header or wp_footer). In a future version I also would like to include support for the Google Tag Manager.
 
