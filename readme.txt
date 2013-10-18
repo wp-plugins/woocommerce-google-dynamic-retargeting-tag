@@ -44,6 +44,7 @@ RLSA: https://www.youtube.com/watch?v=vkOHdEx1PQY
 = Where can I report a bug or suggest improvements? =
 
 Please report your bugs and support requests in the Support Forum for this plugin: http://wordpress.org/support/plugin/woocommerce-google-dynamic-retargeting-tag
+
 I will need some Data to be able to help you.
 
 * Website address
