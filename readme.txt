@@ -17,16 +17,19 @@ This plugin enables to run dynamic retargeting Google AdWords campaigns with cus
 There are a few requirements for this plugin to run. 
 
 * WooCommerce
-* Google Merchant Center Account
+* Google Merchant Center Account with all products uploaded
+* WooCommerce Google Product Feed Plugin or something similar to upload the products to the Google Merchant Center
+* AdWords Account with a configured remarketing tag
 
-The first and most obvious is you need WooCommerce running on your Wordpress installation. The second requirement is a Google Merchant Center account into which you have uploaded all your products. There is a Woocommerce plugin called Google Product Feed which can do that for you and with which this plugin has been tested. If you use a different way to upload your products into Google Merchant Center (GMC) the plugin might need some tweaking as it is important to match the product ID from WooCommerce with the product ID which has been uploaded into the GMC. Also this plugin has been tested with the Wootique and Canvas themes. As long as your theme includes the woo_foot hook it should work. Otherwise the plugin needs again some more tweaking (eg. firing the tag in wp_header or wp_footer). In a future version I also would like to include support for the Google Tag Manager.
+Once all of this has been installed correctly Google AdWords will collect the remarketing lists. With those lists you will be able to use Remarketing Lists for Search Ads (RLSA) ads and Dynamic Display Ads.  
+
+The WGDR plugin has been tested with the current versions of WordPress, WooCommerce, the Google Product Feed Plugin, the Wootique and Canvas themes.
 
 Please find more interesting information on following pages:
 
-http://www.google.com/ads/innovations/dynamicdisplayads.html
-http://www.google.com/think/products/dynamic-remarketing-for-retail.html
-https://www.youtube.com/watch?v=vkOHdEx1PQY
-http://www.practicalecommerce.com/articles/4095-4-Lessons-from-Google-s-Dynamic-Remarketing-Ads
+Dynamic Display Ads: http://www.google.com/ads/innovations/dynamicdisplayads.html
+Dynamic Remarketing: http://www.google.com/think/products/dynamic-remarketing-for-retail.html
+RLSA: https://www.youtube.com/watch?v=vkOHdEx1PQY
  
 == Installation ==
 
