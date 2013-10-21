@@ -5,7 +5,7 @@
 Plugin Name:  WooCommerce Google Dynamic Retargeting tag
 Plugin URI:   http://www.wolfundbaer.ch
 Description:  This plugin integrates the Google Dynamic Retargeting Tracking code with customized variables in a WooCommerce shop. It enables to run dynamic retargeting campaigns with customized content based on previous user behavior. There are a few requirements for this plugin to run. The first and most obvious is you need WooCommerce running on your Wordpress installation. The second requirement is a Google Merchant Center account into which you have uploaded all your products. There is a Woocommerce plugin called Google Product Feed which can do that for you and with which this plugin has been tested. If you use a different way to upload your products into Google Merchant Center (GMC) the plugin might need some tweaking as it is important to match the product ID from WooCommerce with the product ID which has been uploaded into the GMC. Also this plugin has been tested with the Wootique Theme. As long as your theme includes the woo_foot hook it should work. Otherwise the plugin needs again some more tweaking (eg. firing the tag in wp_header or wp_footer). In a future version I also would like to include support for the Google Tag Manager.
-Version:      0.1
+Version:      0.1.1
 Author:       Wolf & Bär
 Author URI:   http://www.wolfundbaer.ch
 
@@ -24,7 +24,9 @@ class WGDR{
 		// checking if WooCommerce is running. If yes let the plugin do it's magic.
 		//if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 			
-			add_action('woo_foot', array($this, 'google_dynamic_retargeting_code'));
+			// using the woo_foot hook leads to problems with some themes. using wp_footer instead should solve it for all themes, as long as they use the standard wp_footer hook
+			// add_action('woo_foot', array($this, 'google_dynamic_retargeting_code'));
+			add_action('wp_footer', array($this, 'google_dynamic_retargeting_code'));
 		//}
 	}
 
