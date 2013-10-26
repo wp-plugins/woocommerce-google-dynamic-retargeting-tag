@@ -29,7 +29,7 @@ Please find more interesting information on following pages:
 
 Dynamic Display Ads: http://www.google.com/ads/innovations/dynamicdisplayads.html
 Dynamic Remarketing: http://www.google.com/think/products/dynamic-remarketing-for-retail.html
-RLSAaa: https://www.youtube.com/watch?v=vkOHdEx1PQY
+RLSA: https://www.youtube.com/watch?v=vkOHdEx1PQY
  
 == Installation ==
 
@@ -58,6 +58,7 @@ I will need some data to be able to help you.
 
 
 == Screenshots ==
+1. first screenshot
 
 == Changelog ==
 
