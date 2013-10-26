@@ -58,8 +58,7 @@ I will need some data to be able to help you.
 
 
 == Screenshots ==
-
-1. first screenshot screenshot-1.png
+1. first screenshot
 
 == Changelog ==
 
