@@ -59,6 +59,8 @@ I will need some data to be able to help you.
 
 == Screenshots ==
 
+1. first screenshot gta_1.png
+
 == Changelog ==
 
 
