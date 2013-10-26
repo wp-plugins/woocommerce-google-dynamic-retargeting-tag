@@ -58,7 +58,7 @@ I will need some data to be able to help you.
 
 
 == Screenshots ==
-1. first screenshot
+1. Validate the configuration of the plugin with the Google Tag Assistant
 
 == Changelog ==
 
