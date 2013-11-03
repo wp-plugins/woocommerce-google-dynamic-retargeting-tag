@@ -3,8 +3,8 @@ Contributors: alekv
 Donate link: http://www.wolfundbaer.ch/donations/
 Tags: WooCommerce, Google AdWords, dynamic remarketing tag
 Requires at least: 3.0.1
-Tested up to: 3.6.1
-Stable tag: 0.1.1
+Tested up to: 3.7.1
+Stable tag: 0.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,7 +62,8 @@ I will need some data to be able to help you.
 
 == Changelog ==
 
-
+= 0.1.2 =
+* The code reflects now that the conversion_label field has been made optional by Google AdWords
 = 0.1.1 =
 * Changed the woo_foot hook to wp_footer to avoid problems with some themes. This should be more compatible with most themes as long as they use the wp_footer hook. 
 = 0.1 =
