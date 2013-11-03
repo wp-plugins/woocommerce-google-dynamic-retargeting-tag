@@ -115,17 +115,17 @@ class WGDR{
 
 	function wgdr_plugin_setting_string_1() {
 		$options = get_option('wgdr_plugin_options_1');
-		echo "<input id='wgdr_plugin_text_string_1' name='wgdr_plugin_options_1[text_string]' size='40' type='text' value='{$options['text_string']}' />";	
+		echo "<input id='wgdr_plugin_text_string_1' name='wgdr_plugin_options_1[text_string]' size='40' type='text' value='{$options['text_string']}' /> - Follow this <a href=\"https://support.google.com/adwords/answer/2476688?hl=en\" target=\"_blank\">link</a> and go to the section \"Get your remarketing tag code\" to find this value. It will be within the tag code.";	
 	}
 
 	function wgdr_plugin_setting_string_2() {
 		$options = get_option('wgdr_plugin_options_2');
-		echo "<input id='wgdr_plugin_text_string_2' name='wgdr_plugin_options_2[text_string]' size='40' type='text' value='{$options['text_string']}' />";
+		echo "<input id='wgdr_plugin_text_string_2' name='wgdr_plugin_options_2[text_string]' size='40' type='text' value='{$options['text_string']}' /> - This field is <u>optional</u>. Leave it empty if you don't find this value in the AdWords remarketing tag.";
 	}
 
 	function wgdr_plugin_setting_string_3() {
 		$options = get_option('wgdr_plugin_options_3');
-		echo "<input id='wgdr_plugin_text_string_3' name='wgdr_plugin_options_3[text_string]' size='40' type='text' value='{$options['text_string']}' />";
+		echo "<input id='wgdr_plugin_text_string_3' name='wgdr_plugin_options_3[text_string]' size='40' type='text' value='{$options['text_string']}' /> - If you use the WooCommerce Google Product Feed Plugin the value here should be \"woocommerce_gpf_\"";
 	}
 
 	// validate our options
@@ -335,7 +335,8 @@ class WGDR{
 		<script type="text/javascript">
 		/* <![CDATA[ */
 		var google_conversion_id = <?php echo $conversion_id; ?>;
-		var google_conversion_label = "<?php echo $conversion_label; ?>";
+		<?php if($conversion_label){ echo "var google_conversion_label = \"" . $conversion_label ."\";";} ?>
+		
 		var google_custom_params = window.google_tag_params;
 		var google_remarketing_only = true;
 		/* ]]> */
@@ -344,7 +345,7 @@ class WGDR{
 		</script>
 		<noscript> 
 		<div style="display:inline;">
-		<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/<?php echo $conversion_id; ?>/?value=0&amp;label=<?php echo $conversion_label; ?>&amp;guid=ON&amp;script=0"/>
+		<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/<?php echo $conversion_id; ?>/?value=0&amp;<?php if($conversion_label){ echo "label=" . $conversion_label . "&amp;";} ?>guid=ON&amp;script=0"/>
 		</div>
 		</noscript>
 
