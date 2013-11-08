@@ -5,12 +5,14 @@
 Plugin Name:  WooCommerce Google Dynamic Retargeting tag
 Plugin URI:   http://www.wolfundbaer.ch
 Description:  This plugin integrates the Google Dynamic Retargeting Tracking code with customized variables in a WooCommerce shop. It enables to run dynamic retargeting campaigns with customized content based on previous user behavior. There are a few requirements for this plugin to run. The first and most obvious is you need WooCommerce running on your Wordpress installation. The second requirement is a Google Merchant Center account into which you have uploaded all your products. There is a Woocommerce plugin called Google Product Feed which can do that for you and with which this plugin has been tested. If you use a different way to upload your products into Google Merchant Center (GMC) the plugin might need some tweaking as it is important to match the product ID from WooCommerce with the product ID which has been uploaded into the GMC. Also this plugin has been tested with the Wootique Theme. As long as your theme includes the woo_foot hook it should work. Otherwise the plugin needs again some more tweaking (eg. firing the tag in wp_header or wp_footer). In a future version I also would like to include support for the Google Tag Manager.
-Version:      0.1.2
+Version:      0.1.3
 Author:       Wolf & Bär
 Author URI:   http://www.wolfundbaer.ch
 
 **************************************************************************/
 
+
+add_action('activate_wgdr/wgdr.php', array('wgdr','wgdr_options_init'));
 
 class WGDR{
 	
@@ -28,7 +30,41 @@ class WGDR{
 			// add_action('woo_foot', array($this, 'google_dynamic_retargeting_code'));
 			add_action('wp_footer', array($this, 'google_dynamic_retargeting_code'));
 		//}
+		
+		// add a settings link on the plugins page
+		add_filter('plugin_action_links', array($this, 'wgdr_settings_link'), 10, 2);
 	}
+	
+	// adds a link on the plugins page for the wgdr settings
+	function wgdr_settings_link($links, $file) {
+		if ($file == plugin_basename(__FILE__))
+			$links[] = '<a href="' . admin_url("options-general.php?page=do_wgdr") . '">'. __('Settings') .'</a>';
+		return $links;
+	}
+	
+	// get the default options for the plugin
+	function wgdr_get_default_options(){
+		// default options settings
+		$options = array(
+			'conversion_ID' => 'test_id',
+			'conversion_label' => 'test_label',
+			'GMC_prefix' => 'test_prefix',
+			'custom_parameters_switch' => true
+		);
+		return $options;
+	}
+	
+	// set default options at initialization of the plugin
+	function wgdr_options_init(){
+		// set options equal to defaults
+		global $wgdr_options;
+		$wgdr_options = get_option('wgdr_options');
+		if( false === $wgdr_options ){
+			$wgdr_options = wgdr_get_default_options();
+		}
+		update_option('wgdr_options', $wgdr_options);
+	}
+	
 
 	/**
 		GDR plugin settings page
@@ -36,7 +72,13 @@ class WGDR{
 
 	// add the admin options page
 	function wgdr_plugin_admin_add_page() {
-		add_options_page('WGDR Plugin Page', 'WGDR Plugin Menu', 'manage_options', 'do_wgdr', array($this,'wgdr_plugin_options_page'));
+		add_options_page(
+			'WGDR Plugin Page', 					// $page_title
+			'WGDR Plugin Menu', 					// $menu_title
+			'manage_options', 						// $capability
+			'do_wgdr', 								// $menu_slug
+			array($this,'wgdr_plugin_options_page'	// callback
+		));
 	}
 
 
@@ -51,28 +93,50 @@ class WGDR{
 		//}
 
 	?>
-	<div>
-	<h2>Google Dynamic Retargeting Tag for WooCommerce</h2>
 
-
+	<br>
+<div style="background: #eee; width: 772px">
+	<div style="background: #ccc; padding: 10px; font-weight: bold">Configuration for the Google Dynamic Retargeting Tag for WooCommerce</div>
 	<form action="options.php" method="post">
+		
 	<?php settings_fields('wgdr_plugin_options'); ?>
 	<?php do_settings_sections('do_wgdr'); ?>
+	<br>
+ <table class="form-table" style="margin: 10px">
+	<tr>
+		<th scope="row" style="white-space: nowrap">
+			<input name="Submit" type="submit" value="<?php esc_attr_e('Save Changes'); ?>" class="button" />
+		</th>
 
-	<input name="Submit" type="submit" value="<?php esc_attr_e('Save Changes'); ?>" />
-	</form></div>
-
-	<p>.<p>.<p>
-	<div><h3>This plugin was developed by <a href="http://www.wolfundbaer.ch" target="_blank">Wolf & Bär</a><p>Buy me a beer if you like the plugin.<br>
-	If you want me to continue developing the plugin buy me a few more beers.</h3></div>
-
-	<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-	<input type="hidden" name="cmd" value="_s-xclick">
-	<input type="hidden" name="hosted_button_id" value="UE3D2AW8YTML8">
-	<input type="image" src="https://www.paypalobjects.com/en_US/CH/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-	<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</tr>
+</table>
 	</form>
+	
+	</div>
+	
+	<br>
+	
+	<div style="background: #eee; width: 772px">
+		<div style="background: #ccc; padding: 10px; font-weight: bold">Donation</div>
+		
+	    <table class="form-table" style="margin: 10px">
+	   	<tr>
+	   		<th scope="row">
+				<div style="padding: 10px">This plugin was developed by <a href="http://www.wolfundbaer.ch" target="_blank">Wolf & Bär</a><p>Buy me a beer if you like the plugin.<br>
+				If you want me to continue developing the plugin buy me a few more beers. Although, I probably will continue to develop the plugin anyway it would be just much more fun if I had a few beers to celebrate my milestones.</div>
 
+				<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+				<input type="hidden" name="cmd" value="_s-xclick">
+				<input type="hidden" name="hosted_button_id" value="UE3D2AW8YTML8">
+				<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+				<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+				</form>
+	   		</th>
+	   </tr>
+	   </table>
+	</div>
+		
+	
 
 	<?php
 
@@ -97,13 +161,14 @@ class WGDR{
 		register_setting( 'wgdr_plugin_options', 'wgdr_plugin_options_2');
 		register_setting( 'wgdr_plugin_options', 'wgdr_plugin_options_3');
 		add_settings_section('wgdr_plugin_main', 'WGDR Main Settings', array($this,'wgdr_plugin_section_text'), 'do_wgdr');
+		//add_settings_section('wgdr_plugin_main', 'WGDR Main Settings', 'wgdr_plugin_section_text', 'do_wgdr');
 		add_settings_field('wgdr_plugin_text_string_1', 'Conversion ID', array($this,'wgdr_plugin_setting_string_1'), 'do_wgdr', 'wgdr_plugin_main');
 		add_settings_field('wgdr_plugin_text_string_2', 'Conversion label', array($this,'wgdr_plugin_setting_string_2'), 'do_wgdr', 'wgdr_plugin_main');
 		add_settings_field('wgdr_plugin_text_string_3', 'Google Merchant Center prefix', array($this,'wgdr_plugin_setting_string_3'), 'do_wgdr', 'wgdr_plugin_main');
 	}
 
 	function wgdr_plugin_section_text() {
-		echo '<p>WooCommerce Google Dynamic Retargeting tag settings.</p>';
+		// echo '<p>WooCommerce Google Dynamic Retargeting tag settings.</p>';
 	}
 
 	/*
@@ -115,17 +180,17 @@ class WGDR{
 
 	function wgdr_plugin_setting_string_1() {
 		$options = get_option('wgdr_plugin_options_1');
-		echo "<input id='wgdr_plugin_text_string_1' name='wgdr_plugin_options_1[text_string]' size='40' type='text' value='{$options['text_string']}' /> - Follow this <a href=\"https://support.google.com/adwords/answer/2476688?hl=en\" target=\"_blank\">link</a> and go to the section \"Get your remarketing tag code\" to find this value. It will be within the tag code.";	
+		echo "<input id='wgdr_plugin_text_string_1' name='wgdr_plugin_options_1[text_string]' size='40' type='text' value='{$options['text_string']}' /><br>Follow this <a href=\"https://support.google.com/adwords/answer/2476688?hl=en\" target=\"_blank\">link</a> and go to the section \"Get your remarketing tag code\" to find this value. It will be within the tag code.";	
 	}
 
 	function wgdr_plugin_setting_string_2() {
 		$options = get_option('wgdr_plugin_options_2');
-		echo "<input id='wgdr_plugin_text_string_2' name='wgdr_plugin_options_2[text_string]' size='40' type='text' value='{$options['text_string']}' /> - This field is <u>optional</u>. Leave it empty if you don't find this value in the AdWords remarketing tag.";
+		echo "<input id='wgdr_plugin_text_string_2' name='wgdr_plugin_options_2[text_string]' size='40' type='text' value='{$options['text_string']}' /><br>This field is <u>optional</u>. Leave it empty if you don't use a customized AdWords remarketing tag.";
 	}
 
 	function wgdr_plugin_setting_string_3() {
 		$options = get_option('wgdr_plugin_options_3');
-		echo "<input id='wgdr_plugin_text_string_3' name='wgdr_plugin_options_3[text_string]' size='40' type='text' value='{$options['text_string']}' /> - If you use the WooCommerce Google Product Feed Plugin the value here should be \"woocommerce_gpf_\"";
+		echo "<input id='wgdr_plugin_text_string_3' name='wgdr_plugin_options_3[text_string]' size='40' type='text' value='{$options['text_string']}' /><br>If you use the WooCommerce Google Product Feed Plugin the value here should be \"woocommerce_gpf_\"";
 	}
 
 	// validate our options
@@ -136,12 +201,6 @@ class WGDR{
 		}
 		return $newinput;
 	}
-
-
-
-		/** 
-				plugin code starts here
-		**/
 
 
 
@@ -165,6 +224,7 @@ class WGDR{
 		$mc_prefix = $opt['text_string'];
 		return $mc_prefix;
 	}
+	
 
 	/** 
 		Google Dynamic Retargeting tag
@@ -177,7 +237,9 @@ class WGDR{
 		global $woocommerce;
 
 		//$conversion_id = '9876543210';
-		$conversion_id = $this->get_conversion_id();
+		//$conversion_id = $this->get_conversion_id();
+		$opt  = get_option('wgdr_plugin_options_1');
+		$conversion_id = $opt['text_string'];
 		//$conversion_label = 'yYyYyYyY';
 		$conversion_label = $this->get_conversion_label();
 		//$mc_prefix = 'woocommerce_gpf_';

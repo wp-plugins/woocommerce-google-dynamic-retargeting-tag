@@ -2,9 +2,9 @@
 Contributors: alekv
 Donate link: http://www.wolfundbaer.ch/donations/
 Tags: WooCommerce, Google AdWords, dynamic remarketing tag
-Requires at least: 3.0.1
+Requires at least: 3.1
 Tested up to: 3.7.1
-Stable tag: 0.1.2
+Stable tag: 0.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,6 +42,10 @@ RLSaA: https://www.youtube.com/watch?v=vkOHdEx1PQY
 
 == Frequently Asked Questions ==
 
+= How do I check if the plugin is working properly?
+
+Download the Google Tag Assistant browser plugin. It is a powerful tool to validate all Google tags on your pages.
+
 = Where can I report a bug or suggest improvements? =
 
 Please report your bugs and support requests in the support forum for this plugin: http://wordpress.org/support/plugin/woocommerce-google-dynamic-retargeting-tag
@@ -62,8 +66,10 @@ I will need some data to be able to help you.
 
 == Changelog ==
 
+= 0.1.3 =
+* Added settings field to the plugin page.
 = 0.1.2 =
-* The code reflects now that the conversion_label field has been made optional by Google AdWords
+* The code reflects now that the conversion_label field is optional.
 = 0.1.1 =
 * Changed the woo_foot hook to wp_footer to avoid problems with some themes. This should be more compatible with most themes as long as they use the wp_footer hook. 
 = 0.1 =
