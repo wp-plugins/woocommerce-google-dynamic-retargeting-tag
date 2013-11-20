@@ -42,7 +42,7 @@ RLSaA: https://www.youtube.com/watch?v=vkOHdEx1PQY
 
 == Frequently Asked Questions ==
 
-= How do I check if the plugin is working properly?
+= How do I check if the plugin is working properly? =
 
 Download the Google Tag Assistant browser plugin. It is a powerful tool to validate all Google tags on your pages.
 
