@@ -12,7 +12,7 @@ This plugin integrates the Google Dynamic Retargeting Tracking code with customi
 
 == Description ==
 
-This plugin enables to run dynamic retargeting Google AdWords campaigns with customized content based on previous user behavior in a WooCommerce shop. 
+Do you have a WooCommerce shop and want to run dynamic remarketing campaigns with Google AdWords? This plugin will insert a customized remarketing tag on all your shop pages. Google AdWords will then be able to collect customer behaviour data (product viewers, buyers, order value, cart abandoners, etc). Based on this data you will be able to run targeted remarketing campaigns as well as increase the search ad bids for past visitors of your shop (RLSA). 
 
 There are a few requirements for this plugin to run. 
 
@@ -21,7 +21,7 @@ There are a few requirements for this plugin to run.
 * WooCommerce Google Product Feed plugin or something similar to upload the products to the Google Merchant Center
 * AdWords account with a configured remarketing tag
 
-Once all of this has been installed correctly Google AdWords will collect the remarketing lists. With those lists you will be able to use Remarketing Lists for Search Ads (RLSA) and Dynamic Display Ads.  
+Once all of this has been set up correctly Google AdWords will collect the remarketing lists. With those lists you will be able to use Remarketing Lists for Search Ads (RLSA) and Dynamic Display Ads.  
 
 The WGDR plugin has been tested with the current versions of WordPress, WooCommerce, the Google Product Feed plugin, the Wootique and several other themes.
 
@@ -29,7 +29,7 @@ Please find more interesting information on following pages:
 
 Dynamic Display Ads: http://www.google.com/ads/innovations/dynamicdisplayads.html
 Dynamic Remarketing: http://www.google.com/think/products/dynamic-remarketing-for-retail.html
-RLSaA: https://www.youtube.com/watch?v=vkOHdEx1PQY
+RLSA: https://www.youtube.com/watch?v=vkOHdEx1PQY
  
 == Installation ==
 
