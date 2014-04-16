@@ -3,7 +3,7 @@ Contributors: alekv
 Donate link: http://www.wolfundbaer.ch/donations/
 Tags: WooCommerce, Google AdWords, dynamic remarketing tag
 Requires at least: 3.1
-Tested up to: 3.7.1
+Tested up to: 3.9
 Stable tag: 0.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -35,9 +35,9 @@ RLSA: https://www.youtube.com/watch?v=vkOHdEx1PQY
 
 1. Upload the WGDR plugin directory into your `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Get the AdWords conversion ID and the conversion label. You will find both values in the AdWords remarketing tag. https://support.google.com/adwords/answer/2476688
-4. In the WordpPress admin panel go to settings and then into the WGACT plugin menu. Please enter the conversion ID and the conversion label into their respective fields. 
-5. Also add the Google Merchant Center prefix which is "woocommerce_gpf_" if you use the Google Product Feed plugin to upload your products the the Google Merchant Center.
+3. Get the AdWords conversion ID and the conversion label. If you are not using a customized remarketing tag then you will only need to enter the conversion ID and leave the conversion label empty. You will find one or both values in the AdWords remarketing tag. https://support.google.com/adwords/answer/2476688
+4. In the WordpPress admin panel go to settings and then into the WGACT plugin menu. Please enter the conversion ID and if available the conversion label into their respective fields. 
+5. Also add the Google Merchant Center prefix. If you are using the WooThemes Google Product Feed plugin (http://www.woothemes.com/products/google-product-feed/) then the prefix is "woocommerce_gpf_". If you are using one of the two free Google Merchant Center feed plugins from here http://wordpress.org/plugins/woocommerce-google-merchant-center-feed/ or here http://www.victorciobanu.com/free-woocommerce-product-feed-plugin/ then just leave the prefix empty "".
 6. Use the Google Tag Assistant browser plugin to test the tracking code.
 
 == Frequently Asked Questions ==
@@ -45,6 +45,13 @@ RLSA: https://www.youtube.com/watch?v=vkOHdEx1PQY
 = How do I check if the plugin is working properly? =
 
 Download the Google Tag Assistant browser plugin. It is a powerful tool to validate all Google tags on your pages.
+
+= What is a customized remarketing tag? =
+
+If you want to use a longer cookie validity time like 360 days (up to 540 days) then you will have to configure a customized remarketing tag. I would suggest to configure one anyway, and you only will need just one customized tag.
+* Once you have configured the customized remarketing tag make sure to set the cookie validity to 540 days and track all pages. Based on this remarketing tag you will be able to define any sort of rules to match your tracking needs, which is why you only need one remarketing tag.
+* The plugin will be able to work with the customized tag. This means you don't need to additionally add the customized remarketing tag on your website. Just add the conversion label from the customized remarketing tag into the the according field in the WGDR plugin. 
+
 
 = Where can I report a bug or suggest improvements? =
 
