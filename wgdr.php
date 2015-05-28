@@ -1,25 +1,26 @@
 <?php
-
-/***************************************************************************
-
+/**
 Plugin Name:  WooCommerce Google Dynamic Retargeting tag
-Plugin URI:   http://www.wolfundbaer.ch
-Description:  This plugin integrates the Google Dynamic Retargeting Tracking code with customized variables in a WooCommerce shop. It enables to run dynamic retargeting campaigns with customized content based on previous user behavior. There are a few requirements for this plugin to run. The first and most obvious is you need WooCommerce running on your Wordpress installation. The second requirement is a Google Merchant Center account into which you have uploaded all your products. There is a Woocommerce plugin called Google Product Feed which can do that for you and with which this plugin has been tested. If you use a different way to upload your products into Google Merchant Center (GMC) the plugin might need some tweaking as it is important to match the product ID from WooCommerce with the product ID which has been uploaded into the GMC. Also this plugin has been tested with the Wootique Theme. As long as your theme includes the woo_foot hook it should work. Otherwise the plugin needs again some more tweaking (eg. firing the tag in wp_header or wp_footer). In a future version I also would like to include support for the Google Tag Manager.
-Version:      0.1.3
-Author:       Wolf & Bär
+Plugin URI:   https://wordpress.org/plugins/woocommerce-google-dynamic-retargeting-tag/
+Description:  Google Dynamic Retargeting Tracking Tag
+Author:       Wolf & Bär GmbH
 Author URI:   http://www.wolfundbaer.ch
+Version:      0.1.4
+License:      GPLv2 or later
+**/
 
-**************************************************************************/
-
+// Security measure: http://mikejolley.com/2013/08/keeping-your-shit-secure-whilst-developing-for-wordpress/
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 add_action('activate_wgdr/wgdr.php', array('wgdr','wgdr_options_init'));
 
 class WGDR{
 	
-	
 	public function __construct(){
 		// add the admin options page
-		add_action('admin_menu', array($this, 'wgdr_plugin_admin_add_page'));
+		add_action('admin_menu', array($this, 'wgdr_plugin_admin_add_page'),100);
 		// add the admin settings and such
 		add_action('admin_init', array($this, 'wgdr_plugin_admin_init'));
 			
@@ -29,6 +30,7 @@ class WGDR{
 			// using the woo_foot hook leads to problems with some themes. using wp_footer instead should solve it for all themes, as long as they use the standard wp_footer hook
 			// add_action('woo_foot', array($this, 'google_dynamic_retargeting_code'));
 			add_action('wp_footer', array($this, 'google_dynamic_retargeting_code'));
+			
 		//}
 		
 		// add a settings link on the plugins page
@@ -38,7 +40,7 @@ class WGDR{
 	// adds a link on the plugins page for the wgdr settings
 	function wgdr_settings_link($links, $file) {
 		if ($file == plugin_basename(__FILE__))
-			$links[] = '<a href="' . admin_url("options-general.php?page=do_wgdr") . '">'. __('Settings') .'</a>';
+			$links[] = '<a href="' . admin_url("admin.php?page=do_wgdr") . '">'. __('Settings') .'</a>';
 		return $links;
 	}
 	
@@ -46,10 +48,10 @@ class WGDR{
 	function wgdr_get_default_options(){
 		// default options settings
 		$options = array(
-			'conversion_ID' => 'test_id',
-			'conversion_label' => 'test_label',
-			'GMC_prefix' => 'test_prefix',
-			'custom_parameters_switch' => true
+			'conversion_ID'				=> 'test_id',
+			'conversion_label'			=> 'test_label',
+			'GMC_prefix'				=> 'test_prefix',
+			'custom_parameters_switch'	=> true
 		);
 		return $options;
 	}
@@ -65,23 +67,21 @@ class WGDR{
 		update_option('wgdr_options', $wgdr_options);
 	}
 	
-
 	/**
 		GDR plugin settings page
 	**/
 
 	// add the admin options page
 	function wgdr_plugin_admin_add_page() {
-		add_options_page(
-			'WGDR Plugin Page', 					// $page_title
-			'WGDR Plugin Menu', 					// $menu_title
-			'manage_options', 						// $capability
-			'do_wgdr', 								// $menu_slug
+		add_submenu_page(
+			'woocommerce',							// $page_title
+			'AdWords Dynamic Remarketing',			// $menu_title
+			'AdWords Dynamic Remarketing',			// $menu_title
+			'manage_options',						// $capability
+			'do_wgdr',								// $menu_slug
 			array($this,'wgdr_plugin_options_page'	// callback
 		));
 	}
-
-
 
 	// display the admin options page
 	function wgdr_plugin_options_page() {
@@ -96,7 +96,7 @@ class WGDR{
 
 	<br>
 <div style="background: #eee; width: 772px">
-	<div style="background: #ccc; padding: 10px; font-weight: bold">Configuration for the Google Dynamic Retargeting Tag for WooCommerce</div>
+	<div style="background: #ccc; padding: 10px; font-weight: bold">Google AdWords Dynamic Retargeting Tag Settings</div>
 	<form action="options.php" method="post">
 		
 	<?php settings_fields('wgdr_plugin_options'); ?>
@@ -122,8 +122,7 @@ class WGDR{
 	    <table class="form-table" style="margin: 10px">
 	   	<tr>
 	   		<th scope="row">
-				<div style="padding: 10px">This plugin was developed by <a href="http://www.wolfundbaer.ch" target="_blank">Wolf & Bär</a><p>Buy me a beer if you like the plugin.<br>
-				If you want me to continue developing the plugin buy me a few more beers. Although, I probably will continue to develop the plugin anyway it would be just much more fun if I had a few beers to celebrate my milestones.</div>
+				<div style="padding: 10px">This plugin was developed by <a href="http://www.wolfundbaer.ch" target="_blank">Wolf & Bär GmbH</a><p>Buy us a few beers if you like the plugin.<p>If you want us to continue developing the plugin buy us a few more beers. Although, we probably will continue to develop the plugin anyway. It would be just much more fun if we had a few beers to celebrate our milestones.</div>
 
 				<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 				<input type="hidden" name="cmd" value="_s-xclick">
@@ -136,8 +135,6 @@ class WGDR{
 	   </table>
 	</div>
 		
-	
-
 	<?php
 
 
@@ -158,12 +155,12 @@ class WGDR{
 		//register_setting( 'plugin_options', 'plugin_options', array($this,'wgdr_plugin_options_validate') );
 	
 		register_setting( 'wgdr_plugin_options', 'wgdr_plugin_options_1');
-		register_setting( 'wgdr_plugin_options', 'wgdr_plugin_options_2');
+		//register_setting( 'wgdr_plugin_options', 'wgdr_plugin_options_2');
 		register_setting( 'wgdr_plugin_options', 'wgdr_plugin_options_3');
-		add_settings_section('wgdr_plugin_main', 'WGDR Main Settings', array($this,'wgdr_plugin_section_text'), 'do_wgdr');
+		add_settings_section('wgdr_plugin_main', 'Main Settings', array($this,'wgdr_plugin_section_text'), 'do_wgdr');
 		//add_settings_section('wgdr_plugin_main', 'WGDR Main Settings', 'wgdr_plugin_section_text', 'do_wgdr');
 		add_settings_field('wgdr_plugin_text_string_1', 'Conversion ID', array($this,'wgdr_plugin_setting_string_1'), 'do_wgdr', 'wgdr_plugin_main');
-		add_settings_field('wgdr_plugin_text_string_2', 'Conversion label', array($this,'wgdr_plugin_setting_string_2'), 'do_wgdr', 'wgdr_plugin_main');
+		//add_settings_field('wgdr_plugin_text_string_2', 'Conversion label', array($this,'wgdr_plugin_setting_string_2'), 'do_wgdr', 'wgdr_plugin_main');
 		add_settings_field('wgdr_plugin_text_string_3', 'Google Merchant Center prefix', array($this,'wgdr_plugin_setting_string_3'), 'do_wgdr', 'wgdr_plugin_main');
 	}
 
@@ -190,7 +187,7 @@ class WGDR{
 
 	function wgdr_plugin_setting_string_3() {
 		$options = get_option('wgdr_plugin_options_3');
-		echo "<input id='wgdr_plugin_text_string_3' name='wgdr_plugin_options_3[text_string]' size='40' type='text' value='{$options['text_string']}' /><br>If you use the WooCommerce Google Product Feed Plugin the value here should be \"woocommerce_gpf_\"";
+		echo "<input id='wgdr_plugin_text_string_3' name='wgdr_plugin_options_3[text_string]' size='40' type='text' value='{$options['text_string']}' /><br>If you use the <a href='http://www.woothemes.com/products/google-product-feed/' target='_blank'>WooCommerce Google Product Feed Plugin</a> the value here should be \"woocommerce_gpf_\". If you use any other plugin for the feed you can leave this field empty.";
 	}
 
 	// validate our options
@@ -202,83 +199,71 @@ class WGDR{
 		return $newinput;
 	}
 
-
-
 	private function get_conversion_id(){
-
 		$opt = get_option('wgdr_plugin_options_1');
 		$conversion_id = $opt['text_string'];
 		return $conversion_id;
 	}
 
 	private function get_conversion_label(){
-
 		$opt = get_option('wgdr_plugin_options_2');
 		$conversion_label = $opt['text_string'];
 		return $conversion_label;
 	}
 
 	private function get_mc_prefix(){
-
 		$opt = get_option('wgdr_plugin_options_3');
 		$mc_prefix = $opt['text_string'];
 		return $mc_prefix;
 	}
 	
-
 	/** 
 		Google Dynamic Retargeting tag
-		Includes a workaround to get the most recent order ID. This needs improvement.
 	**/
-
 	
 	public function google_dynamic_retargeting_code(){
 
 		global $woocommerce;
-
-		//$conversion_id = '9876543210';
-		//$conversion_id = $this->get_conversion_id();
+		
 		$opt  = get_option('wgdr_plugin_options_1');
 		$conversion_id = $opt['text_string'];
-		//$conversion_label = 'yYyYyYyY';
 		$conversion_label = $this->get_conversion_label();
-		//$mc_prefix = 'woocommerce_gpf_';
 		$mc_prefix = $this->get_mc_prefix();
-
+		
 		?>
-
+		
 		<!-- Google Code for Dynamic Retargeting --><?php
 
 		// is_home() doesn't work in my setup. I don't know why. I'll use is_front_page() as workaround
 		if(is_front_page()){
 		?>
-
+		
 		<script type="text/javascript">
 		var google_tag_params = {
 		ecomm_prodid: '',
 		ecomm_pagetype: 'home',
 		ecomm_totalvalue: ''
 		};
-		</script>	
+		</script>
 		<?php
-
+		
 		}
 		/** elseif (is_product_category()){
 			?>
-
+			
 			<script type="text/javascript">
 			var google_tag_params = {
 			ecomm_prodid: '123',
-			ecomm_pagetype: 'product',
+			ecomm_pagetype: 'category',
 			ecomm_totalvalue: '99.00'
 			};
 			</script>
 			<?php
 		}
 		*/
-
+			
 		elseif (is_product()){
-
+			
 		?>
 
 		<script type="text/javascript">
@@ -288,19 +273,18 @@ class WGDR{
 		ecomm_totalvalue: '<?php 
 									$product = get_product( get_the_ID() );
 									echo $product->get_price();
-	
+									
 								?>'
 		};
 		</script>
-
-
+		
 		<?php
-
+		
 		}
 		elseif (is_cart()){
-
+			
 		?>
-
+		
 		<script type="text/javascript">
 		var google_tag_params = {
 		ecomm_prodid: [<?php 
@@ -312,7 +296,7 @@ class WGDR{
 		settype($cartprods_index, "integer");
 	
 		foreach($cartprods as $entry){
-
+			
 			echo '\'';
 			echo $mc_prefix.$entry['product_id'];
 			echo '\'';
@@ -334,40 +318,33 @@ class WGDR{
 		elseif (is_order_received_page()){
 	
 			global $wpdb;
-			$recent_order_id = $wpdb->get_var( 
-				"
-					SELECT MAX(id)
-					FROM $wpdb->posts
-				"
-			);
-	
-			$order = new WC_order($recent_order_id);
+				
+			$order       = new WC_Order(wc_get_order_id_by_order_key($_GET['key']));
 			$order_total = $order->get_total();
 			$items = $order->get_items();
 			$items_count = count($items);
 			$items_index = '1';
 			// need to set type of $cartprods_index to integer, otherwise it will not be recognized as a number when comparing it later in the if clause
 			settype($items_index, "integer");
-	
+			
 		?>
 
 		<script type="text/javascript">
 		var google_tag_params = {
 		ecomm_prodid: [<?php 
-
+			
 			foreach ( $items as $item ) {
-   
-			    echo '\'';
+				
+				echo '\'';
 				echo $mc_prefix.$item['product_id'];
 				echo '\'';
-		
+				
 				if($items_index !== $items_count){
 				echo ', ';
 				$items_index++;
 				}
-
 			}
-
+			
 		?>],
 		<?php 
 
@@ -384,7 +361,7 @@ class WGDR{
 		<script type="text/javascript">
 		var google_tag_params = {
 		ecomm_prodid: '',
-		ecomm_pagetype: 'siteview',
+		ecomm_pagetype: 'other',
 		ecomm_totalvalue: ''
 		};
 		</script>
@@ -397,8 +374,6 @@ class WGDR{
 		<script type="text/javascript">
 		/* <![CDATA[ */
 		var google_conversion_id = <?php echo $conversion_id; ?>;
-		<?php if($conversion_label){ echo "var google_conversion_label = \"" . $conversion_label ."\";";} ?>
-		
 		var google_custom_params = window.google_tag_params;
 		var google_remarketing_only = true;
 		/* ]]> */
@@ -407,16 +382,14 @@ class WGDR{
 		</script>
 		<noscript> 
 		<div style="display:inline;">
-		<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/<?php echo $conversion_id; ?>/?value=0&amp;<?php if($conversion_label){ echo "label=" . $conversion_label . "&amp;";} ?>guid=ON&amp;script=0"/>
+		<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/<?php echo $conversion_id; ?>/?value=0&guid=ON&script=0"/>
 		</div>
 		</noscript>
 
 		<?php
 	}
-
 }
 
 $wgdr = new WGDR();
-
 
 ?>
