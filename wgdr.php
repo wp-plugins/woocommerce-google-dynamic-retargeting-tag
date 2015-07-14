@@ -5,7 +5,7 @@ Plugin URI:   https://wordpress.org/plugins/woocommerce-google-dynamic-retargeti
 Description:  Google Dynamic Retargeting Tracking Tag
 Author:       Wolf + Bär GmbH
 Author URI:   http://www.wolfundbaer.ch
-Version:      1.0
+Version:      1.0.1
 License:      GPLv2 or later
 Text Domain:  woocommerce-google-dynamic-retargeting-tag
 **/
@@ -233,6 +233,7 @@ class WGDR{
 	
 	/** 
 		Google Dynamic Retargeting tag
+		source: https://developers.google.com/adwords-remarketing-tag/parameters
 	**/
 	
 	public function google_dynamic_retargeting_code(){
@@ -254,15 +255,12 @@ class WGDR{
 		?>
 		<script type="text/javascript">
 		var google_tag_params = {
-		ecomm_prodid: '',
-		ecomm_pagetype: 'home',
-		ecomm_totalvalue: ''
+		ecomm_pagetype: 'home'
 		};
 		</script>
 		<?php
 		}
 		// Check if it is a product category page and set the category parameters.
-
 		elseif (is_product_category()){
 		?>
 		<script type="text/javascript">
@@ -301,7 +299,6 @@ class WGDR{
 		<?php
 		}
 		// Check if it is a product page and set the product parameters.
-		// https://developers.google.com/adwords-remarketing-tag/parameters
 		elseif (is_product()){
 		?>
 		<script type="text/javascript">
@@ -323,11 +320,13 @@ class WGDR{
 		
 		?>
 		ecomm_pagetype: 'product',
-		ecomm_totalvalue: '<?php 
-									$product = get_product( get_the_ID() );
-									echo $product->get_price();
+		ecomm_totalvalue: <?php 
+				
+			$product = get_product( get_the_ID() );
+			echo $product->get_price();
 									
-								?>'
+			?>
+			
 		};
 		</script>
 		<?php
@@ -340,26 +339,17 @@ class WGDR{
 		ecomm_prodid: [<?php 
 
 		$cartprods = $woocommerce->cart->get_cart();
-		$cartprods_count = count($cartprods);
-		$cartprods_index = '1';
-		// need to set type of $cartprods_index to integer, otherwise it will not be recognized as a number when comparing it later in the if clause
-		settype($cartprods_index, "integer");
+		$cartprods_items = array();
 	
 		foreach($cartprods as $entry){
-			
-			echo '\'';
-			echo $mc_prefix.$entry['product_id'];
-			echo '\'';
-
-			if($cartprods_index !== $cartprods_count){
-			echo ', ';
-			$cartprods_index++;
-			}	
+			array_push($cartprods_items, "'" . $mc_prefix.$entry['product_id'] . "'");
 		}
+		echo implode(', ', $cartprods_items);
 
 		?>],
 		ecomm_pagetype: 'cart',
 		ecomm_totalvalue: <?php echo $woocommerce->cart->cart_contents_total; ?>
+		
 		};
 		</script>
 		<?php
@@ -367,40 +357,28 @@ class WGDR{
 		}
 		// Check if it the order received page and set the according parameters
 		elseif (is_order_received_page()){
-	
-			global $wpdb;
-				
-			$order       = new WC_Order(wc_get_order_id_by_order_key($_GET['key']));
-			$order_total = $order->get_total();
-			$items = $order->get_items();
-			$items_count = count($items);
-			$items_index = '1';
-			// need to set type of $cartprods_index to integer, otherwise it will not be recognized as a number when comparing it later in the if clause
-			settype($items_index, "integer");
-			
 		?>
 
 		<script type="text/javascript">
 		var google_tag_params = {
-		ecomm_prodid: [<?php 
+		ecomm_prodid: [<?php
 			
-			foreach ( $items as $item ) {
-				
-				echo '\'';
-				echo $mc_prefix.$item['product_id'];
-				echo '\'';
-				
-				if($items_index !== $items_count){
-				echo ', ';
-				$items_index++;
-				}
+			$order       = new WC_Order(wc_get_order_id_by_order_key($_GET['key']));
+			$order_total = $order->get_total();
+			$items = $order->get_items();
+			
+			$order_items = array();
+			foreach($items as $item){
+				array_push($order_items, "'" . $mc_prefix.$item['product_id'] . "'");
 			}
+			echo implode(', ', $order_items);
 			
 		?>],
 		<?php 
 
 		?>ecomm_pagetype: 'purchase',
-		ecomm_totalvalue: '<?php echo $order_total; ?>'
+		ecomm_totalvalue: <?php echo $order_total; ?>
+		
 		};
 		</script>
 		<?php
@@ -412,9 +390,7 @@ class WGDR{
 
 		<script type="text/javascript">
 		var google_tag_params = {
-		ecomm_prodid: '',
-		ecomm_pagetype: 'other',
-		ecomm_totalvalue: ''
+		ecomm_pagetype: 'other'
 		};
 		</script>
 		<?php	
