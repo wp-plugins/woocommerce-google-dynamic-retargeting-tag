@@ -4,7 +4,7 @@ Donate link: http://www.wolfundbaer.ch/donations/
 Tags: WooCommerce, Google AdWords, AdWords, dynamic remarketing tag, remarketing, retargeting
 Requires at least: 3.1
 Tested up to: 4.2.2
-Stable tag: 0.1.4
+Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -66,6 +66,9 @@ I will need some data to be able to help you.
 
 == Changelog ==
 
+= 1.0 =
+* New: Internationalization (German)
+* New: Category support
 = 0.1.4 =
 * Update: Increase plugin security
 * Update: Moved the settings to the submenu of WooCommerce
