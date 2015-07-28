@@ -1,11 +1,11 @@
 <?php
 /**
-Plugin Name:  WooCommerce Google Dynamic Retargeting tag
+Plugin Name:  WooCommerce AdWords Dynamic Remarketing
 Plugin URI:   https://wordpress.org/plugins/woocommerce-google-dynamic-retargeting-tag/
 Description:  Google Dynamic Retargeting Tracking Tag
 Author:       Wolf + Bär GmbH
 Author URI:   http://www.wolfundbaer.ch
-Version:      1.0.1
+Version:      1.0.2
 License:      GPLv2 or later
 Text Domain:  woocommerce-google-dynamic-retargeting-tag
 **/
@@ -279,8 +279,8 @@ class WGDR{
 			}
 			// Add commas into the output.
 			echo implode(', ', $prod_cats_output);
-			echo "]\n";
 			
+			echo "]\n";
 			
 			?>
 		};
@@ -316,6 +316,7 @@ class WGDR{
 			}
 			
 			echo implode(', ', $prod_cats_output);
+			
 			echo "],\n";
 		
 		?>
@@ -336,8 +337,10 @@ class WGDR{
 		?>
 		<script type="text/javascript">
 		var google_tag_params = {
-		ecomm_prodid: [<?php 
-
+		ecomm_prodid: <?php 
+			
+		echo "[";
+			
 		$cartprods = $woocommerce->cart->get_cart();
 		$cartprods_items = array();
 	
@@ -345,8 +348,10 @@ class WGDR{
 			array_push($cartprods_items, "'" . $mc_prefix.$entry['product_id'] . "'");
 		}
 		echo implode(', ', $cartprods_items);
+		
+		echo "],\n";
 
-		?>],
+		?>,
 		ecomm_pagetype: 'cart',
 		ecomm_totalvalue: <?php echo $woocommerce->cart->cart_contents_total; ?>
 		
@@ -361,7 +366,9 @@ class WGDR{
 
 		<script type="text/javascript">
 		var google_tag_params = {
-		ecomm_prodid: [<?php
+		ecomm_prodid: <?php
+			
+			echo "[";
 			
 			$order       = new WC_Order(wc_get_order_id_by_order_key($_GET['key']));
 			$order_total = $order->get_total();
@@ -373,7 +380,9 @@ class WGDR{
 			}
 			echo implode(', ', $order_items);
 			
-		?>],
+			echo "],\n";
+			
+		?>,
 		<?php 
 
 		?>ecomm_pagetype: 'purchase',
