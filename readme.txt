@@ -1,35 +1,51 @@
 === Plugin Name ===
 Contributors: alekv
 Donate link: http://www.wolfundbaer.ch/donations/
-Tags: WooCommerce, Google AdWords, dynamic remarketing tag
-Requires at least: 3.0.1
-Tested up to: 3.7.1
-Stable tag: 0.1.2
+Tags: WooCommerce, woocommerce, google, Google, AdWords, adwords, dynamic remarketing, dynamic retargeting, dynamic, remarketing, retargeting
+Requires at least: 3.1
+Tested up to: 4.2.3
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin integrates the Google Dynamic Retargeting Tracking code with customized variables in a WooCommerce shop.
+This plugin integrates the Google AdWords Dynamic Remarketing Tracking code with customized variables in a WooCommerce shop.
 
 == Description ==
 
-This plugin enables to run dynamic retargeting Google AdWords campaigns with customized content based on previous user behavior in a WooCommerce shop. 
+Do you have a WooCommerce shop and want to run dynamic remarketing campaigns with Google AdWords? This plugin will insert the customized remarketing tag on all your shop pages. Google AdWords will then be able to collect customer behaviour data (product viewers, buyers, order value, cart abandoners, etc). Based on this data you will be able to run targeted remarketing campaigns as well as increase the search ad bids for past visitors of your shop (RLSA). 
 
-There are a few requirements for this plugin to run. 
+<strong>Requirements</strong>
 
 * WooCommerce
 * Google Merchant Center Account with all products uploaded
 * WooCommerce Google Product Feed plugin or something similar to upload the products to the Google Merchant Center
 * AdWords account with a configured remarketing tag
 
-Once all of this has been installed correctly Google AdWords will collect the remarketing lists. With those lists you will be able to use Remarketing Lists for Search Ads (RLSA) and Dynamic Display Ads.  
+Once all requirements have been met Google AdWords will collect data for the remarketing lists. With those lists you will be able to use Remarketing Lists for Search Ads (RLSA) and Dynamic Display Ads.  
 
-The WGDR plugin has been tested with the current versions of WordPress, WooCommerce, the Google Product Feed plugin, the Wootique and Canvas themes.
+<strong>Installation support</strong>
+
+The entire setup is complex. If you would like us to do the setup for you please contact us under support@wolfundbaer.ch and ask for an offer. 
+
+<strong>Translations</strong>
+
+Thanks to Adrijana Nikolic from http://webhostinggeeks.com for the translation into Serbian.
+
+If you would like to contribute to this plugin with your own translation please drop me an email to support@wolfundbaer.ch
+
+<strong>Similar plugins</strong>
+
+If you like this plugin, have a look at my other AdWords related plugin: https://wordpress.org/plugins/woocommerce-google-adwords-conversion-tracking-tag/
+
+<strong>Support Info:</strong> We will only support installations which run the most current versions of WordPress and WooCommerce.
+
+<strong>More information</strong>
 
 Please find more interesting information on following pages:
 
-Dynamic Display Ads: http://www.google.com/ads/innovations/dynamicdisplayads.html
-Dynamic Remarketing: http://www.google.com/think/products/dynamic-remarketing-for-retail.html
-RLSaA: https://www.youtube.com/watch?v=vkOHdEx1PQY
+Dynamic Display Ads: http://www.google.com/ads/innovations/dynamicdisplayads.html<br>
+Dynamic Remarketing: https://www.thinkwithgoogle.com/products/dynamic-remarketing.html<br>
+RLSA: https://www.youtube.com/watch?v=vkOHdEx1PQY
  
 == Installation ==
 
@@ -41,6 +57,10 @@ RLSaA: https://www.youtube.com/watch?v=vkOHdEx1PQY
 6. Use the Google Tag Assistant browser plugin to test the tracking code.
 
 == Frequently Asked Questions ==
+
+= How do I check if the plugin is working properly? =
+
+Download the Google Tag Assistant browser plugin. It is a powerful tool to validate all Google tags on your pages.
 
 = Where can I report a bug or suggest improvements? =
 
@@ -54,7 +74,7 @@ I will need some data to be able to help you.
 * WooCommerce theme and version of the theme
 * The AdWords remarketing tags conversion ID and conversion label
 
-(Most of these information is publicly viewable on your webpage. If you still want to keep it private don't hesitate to send me a support request to info@wolfundbaer.ch)
+(Most of these information is publicly viewable on your webpage. If you still want to keep it private don't hesitate to send me a support request to support@wolfundbaer.ch)
 
 
 == Screenshots ==
@@ -62,8 +82,25 @@ I will need some data to be able to help you.
 
 == Changelog ==
 
+= 1.0.2 =
+* Update: New translation into Serbian
+* Update: Change of plugin name
+* New: Plugin banner and icon
+= 1.0.1 =
+* Update: Minor update to the code to make it cleaner and easier to read
+= 1.0 =
+* New: Internationalization (German)
+* New: Category support
+= 0.1.4 =
+* Update: Increase plugin security
+* Update: Moved the settings to the submenu of WooCommerce
+* Update: Improved DB handling of orders on the thankyou page
+* Update: Code cleanup
+* Update: Removed the conversion label. It is not necessary.
+= 0.1.3 =
+* Added settings field to the plugin page.
 = 0.1.2 =
-* The code reflects now that the conversion_label field has been made optional by Google AdWords
+* The code reflects now that the conversion_label field is optional.
 = 0.1.1 =
 * Changed the woo_foot hook to wp_footer to avoid problems with some themes. This should be more compatible with most themes as long as they use the wp_footer hook. 
 = 0.1 =
