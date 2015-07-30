@@ -4,7 +4,7 @@ Donate link: http://www.wolfundbaer.ch/donations/
 Tags: WooCommerce, woocommerce, google, Google, AdWords, adwords, dynamic remarketing, dynamic retargeting, dynamic, remarketing, retargeting
 Requires at least: 3.1
 Tested up to: 4.2.3
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +82,8 @@ I will need some data to be able to help you.
 
 == Changelog ==
 
+= 1.0.3 =
+* Fix: Minor fix to the code to avoid an invalid argument error which happens in rare cases.
 = 1.0.2 =
 * Update: New translation into Serbian
 * Update: Change of plugin name

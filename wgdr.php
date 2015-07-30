@@ -5,7 +5,7 @@ Plugin URI:   https://wordpress.org/plugins/woocommerce-google-dynamic-retargeti
 Description:  Google Dynamic Retargeting Tracking Tag
 Author:       Wolf + Bär GmbH
 Author URI:   http://www.wolfundbaer.ch
-Version:      1.0.2
+Version:      1.0.3
 License:      GPLv2 or later
 Text Domain:  woocommerce-google-dynamic-retargeting-tag
 **/
@@ -134,7 +134,7 @@ class WGDR{
 	    <table class="form-table" style="margin: 10px">
 	   	<tr>
 	   		<th scope="row">
-				<div style="padding: 10px"><?php esc_html_e( 'This plugin was developed by', 'woocommerce-google-dynamic-retargeting-tag' ) ?> <a href="http://www.wolfundbaer.ch" target="_blank">Wolf & Bär GmbH</a><p><?php esc_html_e( 'Buy me a beer if you like the plugin.', 'woocommerce-google-dynamic-retargeting-tag' ) ?><br>
+				<div style="padding: 10px"><?php esc_html_e( 'This plugin was developed by', 'woocommerce-google-dynamic-retargeting-tag' ) ?> <a href="http://www.wolfundbaer.ch" target="_blank">Wolf + Bär GmbH</a><p><?php esc_html_e( 'Buy me a beer if you like the plugin.', 'woocommerce-google-dynamic-retargeting-tag' ) ?><br>
 				<?php esc_html_e( 'If you want me to continue developing the plugin buy me a few more beers. Although, I probably will continue to develop the plugin anyway. It would be just much more fun if I had a few beers to celebrate my milestones.', 'woocommerce-google-dynamic-retargeting-tag' ) ?></div>
 
 				<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
@@ -274,7 +274,7 @@ class WGDR{
 			$prod_cats = get_the_terms( get_the_ID(), 'product_cat' );
 			$prod_cats_output = array();
 			// Loop throught the categories and push them into the output array.
-			foreach ($prod_cats as $k1 ){
+			foreach ((array)$prod_cats as $k1 ){
 				array_push($prod_cats_output, "'" . $k1->name . "'");
 			}
 			// Add commas into the output.
@@ -311,7 +311,7 @@ class WGDR{
 			$prod_cats = get_the_terms( get_the_ID(), 'product_cat' );
 			$prod_cats_output = array();
 			
-			foreach ($prod_cats as $k1 ){
+			foreach ((array)$prod_cats as $k1 ){
 				array_push($prod_cats_output, "'" . $k1->name . "'");
 			}
 			
@@ -344,12 +344,12 @@ class WGDR{
 		$cartprods = $woocommerce->cart->get_cart();
 		$cartprods_items = array();
 	
-		foreach($cartprods as $entry){
+		foreach((array)$cartprods as $entry){
 			array_push($cartprods_items, "'" . $mc_prefix.$entry['product_id'] . "'");
 		}
 		echo implode(', ', $cartprods_items);
 		
-		echo "],\n";
+		echo "]";
 
 		?>,
 		ecomm_pagetype: 'cart',
@@ -375,12 +375,12 @@ class WGDR{
 			$items = $order->get_items();
 			
 			$order_items = array();
-			foreach($items as $item){
+			foreach((array)$items as $item){
 				array_push($order_items, "'" . $mc_prefix.$item['product_id'] . "'");
 			}
 			echo implode(', ', $order_items);
 			
-			echo "],\n";
+			echo "]";
 			
 		?>,
 		<?php 
