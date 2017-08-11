@@ -324,7 +324,7 @@ class WGDR{
 		ecomm_totalvalue: <?php 
 				
 			$product = get_product( get_the_ID() );
-			echo $product->get_price();
+			echo str_replace(",","",$product->get_price());
 									
 			?>
 			
